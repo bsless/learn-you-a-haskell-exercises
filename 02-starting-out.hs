@@ -40,9 +40,9 @@ duplicate xs = concat [[x,x] | x <- xs]
  - For example "ziplike [1,2,3] ['a', 'b', 'c', 'd']" returns [(1,'a'), (2, 'b'), (3, 'c')]
  -}
 ziplike :: [a] -> [b] -> [(a, b)]
-ziplike [] xs = []
-ziplike xs [] = []
-ziplike (x:xs) (y:ys) = [(x,y)] ++ ziplike xs ys
+ziplike [] _ = []
+ziplike _ [] = []
+ziplike (x:xs) (y:ys) = (x,y):ziplike xs ys
 
 -- Split a list l at element k into a tuple: The first part up to and including k, the second part after k
 -- For example "splitAtIndex 3 [1,1,1,2,2,2]" returns ([1,1,1],[2,2,2])
@@ -62,7 +62,7 @@ slice i k l = drop i (take k l)
 -- Insert element x in list l at index k
 -- For example, "insertElem 2 5 [0,0,0,0,0,0]" returns [0,0,0,0,0,2,0]
 insertElem :: a -> Int -> [a] -> [a]
-insertElem x k l = (take k l) ++ [x] ++ (drop k l)
+insertElem x k l = (take k l) ++ x:(drop k l)
 
 -- Rotate list l n places left.
 -- For example, "rotate 2 [1,2,3,4,5]" gives [3,4,5,1,2]
